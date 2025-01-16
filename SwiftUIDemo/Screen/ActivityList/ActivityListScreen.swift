@@ -22,7 +22,7 @@ struct ActivityListScreen: View {
                 RefreshableView {
                     LazyVStack(spacing: 16) {
                         Text("可下拉刷新⬆️")
-                        Button("跳頁") {
+                        Button("GRDB Demo") {
                             AppState.shared.hiddenTabBar()
                             isPresented = true
                         }
@@ -51,7 +51,7 @@ struct ActivityListScreen: View {
             .background { $0.theme.colorTheme.colorsGrayScale50 }
             .primaryNavigationBar(title: LocalizationList.ID_ActivityList)
             ._navigationDestination(isPresented: $isPresented) {
-                ContentView()
+                AppView()
             }
         }
         .toast(isShow: $viewModel.shouldShowToast, info: viewModel.error?.errorDescription ?? "", type: .error)

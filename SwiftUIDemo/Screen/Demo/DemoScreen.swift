@@ -16,6 +16,8 @@ struct DemoScreen: View {
     
     @FetchRequest(fetchRequest: fetchRequestLimit10()) var students: FetchedResults<Student>
     
+    @FetchRequest(sortDescriptors: []) var pencils: FetchedResults<Pencil>
+    
     static func fetchRequestLimit10() -> NSFetchRequest<Student> {
         let request: NSFetchRequest<Student> = Student.fetchRequest()
         request.fetchLimit = 10
@@ -36,26 +38,35 @@ struct DemoScreen: View {
             
             Button("Add Student") {
                 let student = Student(context: moc)
+                let pencil = Pencil(context: moc)
                 student.id = UUID()
                 student.name = "1"
+                
+                pencil.title = "AAAA pencil"
+//                student.pencils = [pencil]
+                pencil.student = student
                 
                 try? moc.save()
             }
             
-            if let student = students.first {
-                Button("Remove First Student") {
-                    moc.delete(student)
-                }
-                
-                Text(student.name ?? "")
-                    .onAppear {
-                        if moc.hasChanges {
-                            print("123456")
-                        }
+            List(students, id: \.self) { student in
+                VStack{
+                    Text("\(student.id ?? UUID())")
+                    
+                    if let pencils = student.pencils?.allObjects as? [Pencil], let pencil = pencils.first {
+                        Text(pencil.title ?? "")
                     }
+                }
+            }
+            
+            Button("Delete Student") {
+                if let student = students.first {
+                    moc.delete(student)
+                    try? moc.save() // 記得要保存，否則不會更新DB
+                }
             }
         }
-        .padding(.bottom, 10)
+        .padding(.vertical)
         .showAlert(isPresented: $viewModel.isShowAlert) {
             .init(type: .normal(title: "title", message: "message", confirmActionText: "confirm", cancelActionText: "cancel", iconStyle: .none))
         }

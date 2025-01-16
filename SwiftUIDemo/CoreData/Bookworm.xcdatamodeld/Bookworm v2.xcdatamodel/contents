@@ -6,7 +6,7 @@
         <relationship name="students" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Student"/>
     </entity>
     <entity name="Pencil" representedClassName="Pencil" syncable="YES" codeGenerationType="class">
-        <attribute name="name" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="pencils" inverseEntity="Student"/>
     </entity>
     <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="class">

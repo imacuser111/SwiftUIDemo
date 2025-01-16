@@ -29,6 +29,7 @@ struct SwiftUIDemoApp: App {
             }
             .environmentObject(appState)
             .environment(\.managedObjectContext, dataController.container.viewContext)
+            .grdbManager()
         }
     }
 }
