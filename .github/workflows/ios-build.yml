@@ -40,8 +40,8 @@ jobs:
 
       - name: 🛠️ Build & Archive with xcodebuild
         run: |
-          xcodebuild -scheme "ViwShow" \
-            -archivePath ./build/ViwShow.xcarchive \
+          xcodebuild -scheme "SwiftUIDemo" \
+            -archivePath ./build/SwiftUIDemo.xcarchive \
             -sdk iphoneos \
             -configuration Release \
             -destination "generic/platform=iOS" \
@@ -51,7 +51,7 @@ jobs:
       - name: 📦 Export .ipa
         run: |
           xcodebuild -exportArchive \
-            -archivePath ./build/ViwShow.xcarchive \
+            -archivePath ./build/SwiftUIDemo.xcarchive \
             -exportPath ./build/export \
             -exportOptionsPlist "${{ steps.select_export.outputs.plist }}"
 
@@ -59,4 +59,4 @@ jobs:
         run: |
           fastlane pilot upload \
             --api_key_path api_key.json \
-            --ipa ./build/export/ViwShow.ipa
+            --ipa ./build/export/SwiftUIDemo.ipa
