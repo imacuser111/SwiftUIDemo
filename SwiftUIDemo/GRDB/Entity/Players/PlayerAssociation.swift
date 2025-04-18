@@ -34,4 +34,12 @@ extension PlayerAssociation {
         
         return try? fetchOne(db, request)
     }
+    
+    static func fetchSomePlayers(_ db: Database, limit: Int) -> [Self]? {
+        let request = Player
+            .including(optional: Player.games)
+            .limit(limit)
+        
+        return try? fetchAll(db, request)
+    }
 }

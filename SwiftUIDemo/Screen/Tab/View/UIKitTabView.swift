@@ -51,7 +51,7 @@ class TabViewController: UITabBarController {
     }
     
     /// 設置 TabBar 隱藏
-    func setTabBarHidden(_ shouldShowTabBar: Bool, animated: Bool = true) {
+    override func setTabBarHidden(_ shouldShowTabBar: Bool, animated: Bool = true) {
         let duration: TimeInterval = animated ? 0.3 : 0
         UIView.animate(withDuration: duration) { [weak self] in
             self?.tabBar.isHidden = !shouldShowTabBar

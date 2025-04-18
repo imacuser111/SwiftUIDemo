@@ -51,7 +51,7 @@ struct ActivityListScreen: View {
             .background { $0.theme.colorTheme.colorsGrayScale50 }
             .primaryNavigationBar(title: LocalizationList.ID_ActivityList)
             ._navigationDestination(isPresented: $isPresented) {
-                AppView()
+                GRDBDemo()
             }
         }
         .toast(isShow: $viewModel.shouldShowToast, info: viewModel.error?.errorDescription ?? "", type: .error)

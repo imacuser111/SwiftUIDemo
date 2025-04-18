@@ -9,6 +9,8 @@ import Foundation
 import CoreData
 
 class DataController: ObservableObject {
+    static let shared: DataController = .init()
+    
     let container = NSPersistentContainer(name: "Bookworm")
     
     init() {

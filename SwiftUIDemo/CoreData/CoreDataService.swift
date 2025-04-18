@@ -10,8 +10,8 @@ import CoreData
 protocol CoreDataService {
     associatedtype Entity: NSManagedObject
     
-    func create(entity: Entity)
+    func create()
     func fetchAll() -> [Entity]
-    func update(entity: Entity)
     func delete(entity: Entity)
+    func deleteAll()
 }

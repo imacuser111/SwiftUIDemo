@@ -17,7 +17,7 @@
 		CE16AB8C2D2E5BD700B5910C /* Table_V1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16AB8A2D2E5BD700B5910C /* Table_V1.swift */; };
 		CE16ABA22D2E5F5F00B5910C /* GRDBManagerKey+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABA12D2E5F5F00B5910C /* GRDBManagerKey+SwiftUI.swift */; };
 		CE16ABA62D2E606600B5910C /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = CE16ABA52D2E606600B5910C /* GRDBQuery */; };
-		CE16ABAA2D2E6BB400B5910C /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABA92D2E6BB400B5910C /* AppView.swift */; };
+		CE16ABAA2D2E6BB400B5910C /* GRDBDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABA92D2E6BB400B5910C /* GRDBDemo.swift */; };
 		CE16ABAC2D2E6C3500B5910C /* DatabaseButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABAB2D2E6C3500B5910C /* DatabaseButtons.swift */; };
 		CE16ABAE2D2E6C6200B5910C /* Player+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABAD2D2E6C6200B5910C /* Player+App.swift */; };
 		CE16ABB12D2F76AE00B5910C /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABB02D2F76AE00B5910C /* Game.swift */; };
@@ -25,7 +25,9 @@
 		CE16ABB52D2FA8AD00B5910C /* GameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABB42D2FA8AD00B5910C /* GameRepository.swift */; };
 		CE16ABB72D2FA9B400B5910C /* Game+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABB62D2FA9B400B5910C /* Game+App.swift */; };
 		CE16ABBB2D30EB0000B5910C /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABBA2D30EB0000B5910C /* CoreDataService.swift */; };
-		CE16ABBD2D30ECC800B5910C /* StudentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE16ABBC2D30ECC800B5910C /* StudentDataService.swift */; };
+		CE2FC2892DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC2882DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift */; };
+		CE2FC28C2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC28B2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift */; };
+		CE2FC28E2DB0F5720077FFB0 /* NavigationDemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC28D2DB0F5720077FFB0 /* NavigationDemoScreen.swift */; };
 		CE8D5B842D1127F100A54123 /* SwiftUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D5B832D1127F100A54123 /* SwiftUIDemoApp.swift */; };
 		CE8D5B862D1127F100A54123 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D5B852D1127F100A54123 /* ContentView.swift */; };
 		CE8D5B882D1127F200A54123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5B872D1127F200A54123 /* Assets.xcassets */; };
@@ -136,7 +138,7 @@
 		CE16AB842D2E544500B5910C /* GRDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRDBManager.swift; sourceTree = "<group>"; };
 		CE16AB8A2D2E5BD700B5910C /* Table_V1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table_V1.swift; sourceTree = "<group>"; };
 		CE16ABA12D2E5F5F00B5910C /* GRDBManagerKey+SwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GRDBManagerKey+SwiftUI.swift"; sourceTree = "<group>"; };
-		CE16ABA92D2E6BB400B5910C /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		CE16ABA92D2E6BB400B5910C /* GRDBDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBDemo.swift; sourceTree = "<group>"; };
 		CE16ABAB2D2E6C3500B5910C /* DatabaseButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseButtons.swift; sourceTree = "<group>"; };
 		CE16ABAD2D2E6C6200B5910C /* Player+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+App.swift"; sourceTree = "<group>"; };
 		CE16ABB02D2F76AE00B5910C /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -144,7 +146,9 @@
 		CE16ABB42D2FA8AD00B5910C /* GameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRepository.swift; sourceTree = "<group>"; };
 		CE16ABB62D2FA9B400B5910C /* Game+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game+App.swift"; sourceTree = "<group>"; };
 		CE16ABBA2D30EB0000B5910C /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
-		CE16ABBC2D30ECC800B5910C /* StudentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDataService.swift; sourceTree = "<group>"; };
+		CE2FC2882DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoMethod2Screen.swift; sourceTree = "<group>"; };
+		CE2FC28B2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoMethodScreen.swift; sourceTree = "<group>"; };
+		CE2FC28D2DB0F5720077FFB0 /* NavigationDemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoScreen.swift; sourceTree = "<group>"; };
 		CE8D5B802D1127F100A54123 /* SwiftUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8D5B832D1127F100A54123 /* SwiftUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoApp.swift; sourceTree = "<group>"; };
 		CE8D5B852D1127F100A54123 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -307,13 +311,13 @@
 			path = Table;
 			sourceTree = "<group>";
 		};
-		CE16ABA72D2E6B9B00B5910C /* AppView */ = {
+		CE16ABA72D2E6B9B00B5910C /* GRDBDemo */ = {
 			isa = PBXGroup;
 			children = (
-				CE16ABA92D2E6BB400B5910C /* AppView.swift */,
+				CE16ABA92D2E6BB400B5910C /* GRDBDemo.swift */,
 				CE16ABAB2D2E6C3500B5910C /* DatabaseButtons.swift */,
 			);
-			path = AppView;
+			path = GRDBDemo;
 			sourceTree = "<group>";
 		};
 		CE16ABAF2D2F73D200B5910C /* Games */ = {
@@ -338,9 +342,18 @@
 		CE16ABBE2D30ECD100B5910C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				CE16ABBC2D30ECC800B5910C /* StudentDataService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		CE2FC28A2DB0EC890077FFB0 /* NavigationDemo */ = {
+			isa = PBXGroup;
+			children = (
+				CE2FC28D2DB0F5720077FFB0 /* NavigationDemoScreen.swift */,
+				CE2FC28B2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift */,
+				CE2FC2882DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift */,
+			);
+			path = NavigationDemo;
 			sourceTree = "<group>";
 		};
 		CE8D5B772D1127F100A54123 = {
@@ -800,10 +813,11 @@
 		CE8D5C762D1167F900A54123 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				CE16ABA72D2E6B9B00B5910C /* AppView */,
+				CE16ABA72D2E6B9B00B5910C /* GRDBDemo */,
 				CE8D5BB52D112A0800A54123 /* Tab */,
 				CE8D5CAB2D127E0400A54123 /* ActivityList */,
 				CE8D5C9D2D1178EE00A54123 /* Demo */,
+				CE2FC28A2DB0EC890077FFB0 /* NavigationDemo */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -1100,20 +1114,23 @@
 				CE8D5CA32D1179D000A54123 /* DemoViewModel.swift in Sources */,
 				CE8D5C562D11521100A54123 /* UIView+Common.swift in Sources */,
 				CE8D5C612D115AB500A54123 /* TextFieldBorderStyle.swift in Sources */,
+				CE2FC2892DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift in Sources */,
 				CE8D5C8A2D11748600A54123 /* NetworkConstants.swift in Sources */,
 				CE8D5CA52D1272A400A54123 /* GetActiveList.swift in Sources */,
 				CE8D5C1F2D114ADE00A54123 /* WKAsyncImageViewModel.swift in Sources */,
+				CE2FC28E2DB0F5720077FFB0 /* NavigationDemoScreen.swift in Sources */,
 				CE8D5C292D114ADE00A54123 /* TicketFieldInfo.swift in Sources */,
 				CE8D5C242D114ADE00A54123 /* RefreshableView.swift in Sources */,
 				CE8D5C312D114BDE00A54123 /* WKDivider.swift in Sources */,
 				CE8D5C592D11521100A54123 /* View+RoundCornerWithBorder.swift in Sources */,
 				CE8D5C652D11640700A54123 /* APP.swift in Sources */,
-				CE16ABAA2D2E6BB400B5910C /* AppView.swift in Sources */,
+				CE16ABAA2D2E6BB400B5910C /* GRDBDemo.swift in Sources */,
 				CE16ABAE2D2E6C6200B5910C /* Player+App.swift in Sources */,
 				CE8D5C502D11510900A54123 /* WKButtonStyle.swift in Sources */,
 				CE16AB7B2D27D47800B5910C /* DataController.swift in Sources */,
 				CE16ABB32D2F7AB400B5910C /* PlayerAssociation.swift in Sources */,
 				CE8D5C472D11508100A54123 /* KeyboardAdaptiveModifier.swift in Sources */,
+				CE2FC28C2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift in Sources */,
 				CE8D5C5D2D115A4700A54123 /* IconTextField.swift in Sources */,
 				CE8D5BDC2D11334300A54123 /* CButtonStyle.swift in Sources */,
 				CE8D5C182D114ADE00A54123 /* GeneralAlert.swift in Sources */,
@@ -1155,7 +1172,6 @@
 				CE8D5C222D114ADE00A54123 /* LoadMoreView.swift in Sources */,
 				CE16AB852D2E544500B5910C /* GRDBManager.swift in Sources */,
 				CE8D5C212D114ADE00A54123 /* WKImageView.swift in Sources */,
-				CE16ABBD2D30ECC800B5910C /* StudentDataService.swift in Sources */,
 				CE8D5C972D11759C00A54123 /* DemoError.swift in Sources */,
 				CE8D5C942D11748600A54123 /* Login.swift in Sources */,
 				CE8D5CAC2D127E0400A54123 /* ActivityListCell.swift in Sources */,

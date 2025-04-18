@@ -11,7 +11,16 @@ struct CreatePlayerButton: View {
     
     var body: some View {
         Button {
-            _ = try! grdbManager.playerRepository.insert(Player.makeRandom())
+//            _ = try! grdbManager.playerRepository.insert(Player.makeRandom())
+            
+            var arr: [Player] {
+                (0...10000).map { _ in 
+                    Player.makeRandom()
+                }
+            }
+            
+            try! grdbManager.playerRepository.insertAllData(arr)
+            
             _ = try! grdbManager.gameRepository.insert(Game.makeRandom())
         } label: {
             Label(titleKey, systemImage: "plus")

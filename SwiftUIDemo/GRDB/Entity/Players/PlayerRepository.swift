@@ -43,6 +43,14 @@ extension PlayerRepository {
         }
     }
     
+    public func insertAllData(_ entity: [Entity]) throws {
+        try dbWriter.write { db in
+            for e in entity {
+                _ = try e.inserted(db)
+            }
+        }
+    }
+    
     /// Updates the player.
     public func update(_ entity: Entity) throws {
         try dbWriter.write { db in
