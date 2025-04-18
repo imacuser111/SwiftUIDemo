@@ -1,0 +1,62 @@
+name: 🚀 iOS Build & Upload to TestFlight
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - staging
+      - cicd
+
+jobs:
+  build-and-upload:
+    runs-on: macos-latest
+
+    steps:
+      - name: 🧾 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 💎 Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+
+      - name: 🚀 Install Fastlane
+        run: gem install fastlane
+
+      - name: 🧠 Select ExportOptions.plist by branch
+        id: select_export
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "plist=config/ExportOptions-Dev.plist" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "plist=config/ExportOptions-Staging.plist" >> $GITHUB_OUTPUT
+          else
+            echo "plist=config/ExportOptions.plist" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🔐 Decode API Key
+        run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" | base64 -d > api_key.json
+
+      - name: 🛠️ Build & Archive with xcodebuild
+        run: |
+          xcodebuild -scheme "ViwShow" \
+            -archivePath ./build/ViwShow.xcarchive \
+            -sdk iphoneos \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -allowProvisioningUpdates \
+            archive
+
+      - name: 📦 Export .ipa
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath ./build/ViwShow.xcarchive \
+            -exportPath ./build/export \
+            -exportOptionsPlist "${{ steps.select_export.outputs.plist }}"
+
+      - name: ☁️ Upload to TestFlight using API Key
+        run: |
+          fastlane pilot upload \
+            --api_key_path api_key.json \
+            --ipa ./build/export/ViwShow.ipa
