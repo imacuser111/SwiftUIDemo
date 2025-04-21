@@ -8,12 +8,12 @@ on:
 jobs:
   build:
     runs-on: macos-last
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Xcode
+      - name: Set Xcode version (optional)
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
       - name: Archive the app
@@ -25,8 +25,7 @@ jobs:
             -archivePath ios/build/SwiftUIDemo.xcarchive \
             -destination 'generic/platform=iOS' \
             -allowProvisioningUpdates \
-            -quiet \
-            CURRENT_PROJECT_VERSION=${{ steps.buildnumber.outputs.build_number }}
+            -quiet
 
       - name: Export IPA
         run: |
@@ -38,22 +37,19 @@ jobs:
             -quiet
 
       - name: Write API Key file
-        run: |
-          echo "${{ secrets.APPSTORE_PRIVATE_KEY }}" > AuthKey.p8
+        run: echo "${{ secrets.APPSTORE_PRIVATE_KEY }}" > AuthKey.p8
 
       - name: Upload to TestFlight
         run: |
           xcrun altool --upload-app \
             --type ios \
             --file ios/build/SwiftUIDemo.ipa \
-            --apiKey ${{ secrets.APPSTORE_KEY_ID }} \
-            --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
-        env:
-          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+            --apiKey "${{ secrets.APPSTORE_KEY_ID }}" \
+            --apiIssuer "${{ secrets.APPSTORE_ISSUER_ID }}"
 
-      - name: Clean up API key
+      - name: Clean up
         run: rm -f AuthKey.p8
 
       - name: Show job status
         if: always()
-        run: echo "Job status:${{ job.status }}"
+        run: echo "Job status: ${{ job.status }}"
