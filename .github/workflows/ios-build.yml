@@ -19,7 +19,7 @@ jobs:
       - name: Archive the app
         run: |
           xcodebuild clean archive \
-            -workspace ios/SwiftUIDemo.xcworkspace \
+            -project SwiftUIDemo.xcodeproj \
             -scheme SwiftUIDemo \
             -configuration Release \
             -archivePath ios/build/SwiftUIDemo.xcarchive \
