@@ -1,52 +1,75 @@
-name: Upload to TestFlight (No Fastlane)
+name: Build and Upload SwiftUIDemo to TestFlight (No Fastlane)
 
 on:
   push:
-    branches: 
-      - cicd
+    branches: [ Release-Store ]
+    tags:
+      - 'Store*'
+  pull_request:
+    branches: [ Release-Store ]
 
 jobs:
-  build-and-upload:
-    runs-on: macos-latest
+  build:
+    runs-on: macos-13
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Set Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app
 
-      - name: Resolve Swift Package Dependencies
-        run: xcodebuild -resolvePackageDependencies -scheme SwiftUIDemo
+      - name: Install dependencies (CocoaPods)
+        run: |
+          cd ios
+          pod install
 
-      - name: Decode App Store Connect API key
-        run: echo "$APP_STORE_API_KEY_BASE64" | base64 -d -o AuthKey.p8
-        env:
-          APP_STORE_API_KEY_BASE64: ${{ secrets.APP_STORE_API_KEY_BASE64 }}
+      - name: Generate Build Number
+        id: buildnumber
+        uses: einaregilsson/build-number@v2
+        with:
+          token: ${{ secrets.ACTION_TEST }}
+          prefix: IOS
 
-      - name: Clean and Archive
+      - name: Show Build Number
+        run: echo "Build Number:${{ steps.buildnumber.outputs.build_number }}"
+
+      - name: Build archive
         run: |
           xcodebuild clean archive \
+            -workspace ios/SwiftUIDemo.xcworkspace \
             -scheme SwiftUIDemo \
             -configuration Release \
-            -archivePath $PWD/build/SwiftUIDemo.xcarchive \
+            -archivePath ios/build/SwiftUIDemo.xcarchive \
             -destination 'generic/platform=iOS' \
-            -allowProvisioningUpdates
+            -allowProvisioningUpdates \
+            -disableAutomaticPackageResolution \
+            -quiet \
+            CURRENT_PROJECT_VERSION=${{ steps.buildnumber.outputs.build_number }}
 
       - name: Export IPA
         run: |
           xcodebuild -exportArchive \
-            -archivePath $PWD/build/SwiftUIDemo.xcarchive \
-            -exportPath $PWD/build \
-            -exportOptionsPlist ExportOptions.plist
+            -archivePath ios/build/SwiftUIDemo.xcarchive \
+            -exportPath ios/build \
+            -exportOptionsPlist ios/ExportOptions.plist \
+            -allowProvisioningUpdates \
+            -quiet
 
-      - name: Upload to TestFlight via altool
+      - name: Write API Key to file
+        run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
+
+      - name: Upload to TestFlight
         run: |
           xcrun altool --upload-app \
             --type ios \
-            --file build/SwiftUIDemo.ipa \
-            --apiKey $APP_STORE_KEY_ID \
-            --apiIssuer $APP_STORE_ISSUER_ID
-        env:
-          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
-          APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+            --file ios/build/SwiftUIDemo.ipa \
+            --apiKey ${{ secrets.APPSTORE_KEY_ID }} \
+            --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
+
+      - name: Cleanup
+        run: rm -f AuthKey.p8
+
+      - name: Show Job Status
+        if: always()
+        run: echo "Job status:${{ job.status }}"
