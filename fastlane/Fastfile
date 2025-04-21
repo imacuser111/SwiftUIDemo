@@ -1,0 +1,76 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+  # 設定預設的平台為 iOS
+  default_platform(:ios)
+
+  platform :ios do
+      # 定義一個新的lane，名為beta。
+      lane :beta do
+        # 使用build_app action打包APP。
+
+        # scheme: 你的scheme名稱。
+        # workspace: Xcode工作區的路徑。
+        build_app(
+          scheme: "SwiftUIDemo",
+          project: "SwiftUIDemo.xcodeproj",
+          include_bitcode: true
+        )
+      end
+  end
+
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload to TestFlight"
+  lane :deploy_testflight do
+    build_app(
+      clean: true,
+      output_directory: './fastlane/release',
+      output_name: 'SwiftUIDemo.ipa',
+      scheme: 'SwiftUIDemo',
+      configuration: 'Release',
+      include_bitcode: false,
+      export_method: 'app-store',
+      export_xcargs: '-allowProvisioningUpdates'
+    )
+
+    notification(
+      title: 'SwiftUIDemo',
+      subtitle: 'Build successful. Preparing for upload...',
+      message: 'Uploading IPA...'
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV['APP_STORE_KEY_ID'],             # 將這些值設在 GitHub Secrets 或 .env
+      issuer_id: ENV['APP_STORE_ISSUER_ID'],
+      key_content: ENV['APP_STORE_KEY_FILEPATH'] # 用 base64 編碼你的 .p8 金鑰
+    )
+
+    upload_to_testflight(
+      ipa: './fastlane/release/SwiftUIDemo.ipa',
+      skip_submission: true,
+      skip_waiting_for_build_processing: true,
+      api_key: api_key
+    )
+
+    notification(
+      title: 'SwiftUIDemo',
+      subtitle: 'Upload to TestFlight successful',
+      message: 'Automation complete!'
+    )
+  end
+end

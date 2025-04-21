@@ -28,7 +28,7 @@
 		CE2FC2892DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC2882DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift */; };
 		CE2FC28C2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC28B2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift */; };
 		CE2FC28E2DB0F5720077FFB0 /* NavigationDemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FC28D2DB0F5720077FFB0 /* NavigationDemoScreen.swift */; };
-		CE2FC2902DB1FD990077FFB0 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE2FC28F2DB1FD990077FFB0 /* ExportOptions.plist */; };
+		CE2FC2922DB5E80A0077FFB0 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE2FC2912DB5E80A0077FFB0 /* ExportOptions.plist */; };
 		CE8D5B842D1127F100A54123 /* SwiftUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D5B832D1127F100A54123 /* SwiftUIDemoApp.swift */; };
 		CE8D5B862D1127F100A54123 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D5B852D1127F100A54123 /* ContentView.swift */; };
 		CE8D5B882D1127F200A54123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5B872D1127F200A54123 /* Assets.xcassets */; };
@@ -150,7 +150,7 @@
 		CE2FC2882DB0EC7D0077FFB0 /* NavigationDemoMethod2Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoMethod2Screen.swift; sourceTree = "<group>"; };
 		CE2FC28B2DB0F5180077FFB0 /* NavigationDemoMethodScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoMethodScreen.swift; sourceTree = "<group>"; };
 		CE2FC28D2DB0F5720077FFB0 /* NavigationDemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDemoScreen.swift; sourceTree = "<group>"; };
-		CE2FC28F2DB1FD990077FFB0 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
+		CE2FC2912DB5E80A0077FFB0 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 		CE8D5B802D1127F100A54123 /* SwiftUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8D5B832D1127F100A54123 /* SwiftUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoApp.swift; sourceTree = "<group>"; };
 		CE8D5B852D1127F100A54123 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -361,7 +361,7 @@
 		CE8D5B772D1127F100A54123 = {
 			isa = PBXGroup;
 			children = (
-				CE2FC28F2DB1FD990077FFB0 /* ExportOptions.plist */,
+				CE2FC2912DB5E80A0077FFB0 /* ExportOptions.plist */,
 				CE8D5B822D1127F100A54123 /* SwiftUIDemo */,
 				CE8D5B932D1127F200A54123 /* SwiftUIDemoTests */,
 				CE8D5B9D2D1127F200A54123 /* SwiftUIDemoUITests */,
@@ -1067,7 +1067,7 @@
 				CE8D5C712D11673600A54123 /* Light.xcassets in Resources */,
 				CE8D5B882D1127F200A54123 /* Assets.xcassets in Resources */,
 				CE8D5C722D11673600A54123 /* Dark.xcassets in Resources */,
-				CE2FC2902DB1FD990077FFB0 /* ExportOptions.plist in Resources */,
+				CE2FC2922DB5E80A0077FFB0 /* ExportOptions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
