@@ -1,24 +1,22 @@
-name: Build and Upload SwiftUIDemo to TestFlight (No Fastlane)
+name: Build and Upload to TestFlight
 
 on:
   push:
-    branches: 
+    branches:
       - cicd
-  pull_request:
-    branches: [ Release-Store ]
 
 jobs:
   build:
-    runs-on: macos-latest
-
+    runs-on: macos-last
+    
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set Xcode version
+      - name: Set up Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-      - name: Build archive
+      - name: Archive the app
         run: |
           xcodebuild clean archive \
             -workspace ios/SwiftUIDemo.xcworkspace \
@@ -27,7 +25,6 @@ jobs:
             -archivePath ios/build/SwiftUIDemo.xcarchive \
             -destination 'generic/platform=iOS' \
             -allowProvisioningUpdates \
-            -disableAutomaticPackageResolution \
             -quiet \
             CURRENT_PROJECT_VERSION=${{ steps.buildnumber.outputs.build_number }}
 
@@ -40,8 +37,9 @@ jobs:
             -allowProvisioningUpdates \
             -quiet
 
-      - name: Write API Key to file
-        run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
+      - name: Write API Key file
+        run: |
+          echo "${{ secrets.APPSTORE_PRIVATE_KEY }}" > AuthKey.p8
 
       - name: Upload to TestFlight
         run: |
@@ -50,10 +48,12 @@ jobs:
             --file ios/build/SwiftUIDemo.ipa \
             --apiKey ${{ secrets.APPSTORE_KEY_ID }} \
             --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
+        env:
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
 
-      - name: Cleanup
+      - name: Clean up API key
         run: rm -f AuthKey.p8
 
-      - name: Show Job Status
+      - name: Show job status
         if: always()
         run: echo "Job status:${{ job.status }}"
