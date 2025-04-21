@@ -18,21 +18,6 @@ jobs:
       - name: Set Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-      - name: Install dependencies (CocoaPods)
-        run: |
-          cd ios
-          pod install
-
-      - name: Generate Build Number
-        id: buildnumber
-        uses: einaregilsson/build-number@v2
-        with:
-          token: ${{ secrets.ACTION_TEST }}
-          prefix: IOS
-
-      - name: Show Build Number
-        run: echo "Build Number:${{ steps.buildnumber.outputs.build_number }}"
-
       - name: Build archive
         run: |
           xcodebuild clean archive \
