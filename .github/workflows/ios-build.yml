@@ -32,7 +32,7 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath ios/build/SwiftUIDemo.xcarchive \
             -exportPath ios/build \
-            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportOptionsPlist ExportOptions.plist \
             -allowProvisioningUpdates \
             -quiet
 
