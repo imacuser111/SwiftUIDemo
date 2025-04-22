@@ -1563,7 +1563,7 @@
 			);
 			currentVersion = CE01813B2D38DAAC002B3A56 /* Bookworm v2.xcdatamodel */;
 			name = Bookworm.xcdatamodeld;
-			path = /Users/user/Desktop/SwiftUI/Practise/SwiftUIDemo/SwiftUIDemo/CoreData/Bookworm.xcdatamodeld;
+			path = Bookworm.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
