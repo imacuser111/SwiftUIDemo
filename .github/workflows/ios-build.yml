@@ -13,9 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Select Xcode 16.2
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+
       - name: Install signing certificate and provisioning profile
         run: |
-          # Install .p12 certificate
           echo "$CERTIFICATE_P12_BASE64" | base64 --decode > certificate.p12
           security create-keychain -p "" build.keychain
           security default-keychain -s build.keychain
@@ -23,7 +25,6 @@ jobs:
           security import certificate.p12 -k build.keychain -P "$P12_PASSWORD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
-          # Install provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "$PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/QPPTest.mobileprovision
         env:
@@ -71,12 +72,18 @@ jobs:
                      -exportOptionsPlist ExportOptions.plist \
                      -exportPath $PWD/build
 
-      - name: Decode App Store Connect API Key
+      - name: Decode API Key and Store Credentials
         run: |
           mkdir -p ~/.private_keys
-          echo "$API_PRIVATE_KEY" | base64 --decode > ~/.private_keys/AuthKey.p8
+          echo "$API_PRIVATE_KEY" | base64 --decode > ~/.private_keys/AuthKey_${API_KEY_ID}.p8
+          xcrun notarytool store-credentials "AC_API" \
+            --key ~/.private_keys/AuthKey_${API_KEY_ID}.p8 \
+            --key-id "$API_KEY_ID" \
+            --issuer-id "$API_ISSUER_ID"
         env:
           API_PRIVATE_KEY: ${{ secrets.API_PRIVATE_KEY }}
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.API_ISSUER_ID }}
 
       - name: Upload to TestFlight
         run: |
