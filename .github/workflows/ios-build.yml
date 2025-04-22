@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Select Xcode 16.2
+      - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
       - name: Install signing certificate and provisioning profile
@@ -72,20 +72,15 @@ jobs:
                      -exportOptionsPlist ExportOptions.plist \
                      -exportPath $PWD/build
 
-      - name: Decode API Key and Store Credentials
+      - name: Prepare App Store Connect API Key
         run: |
           mkdir -p ~/.private_keys
           echo "$API_PRIVATE_KEY" | base64 --decode > ~/.private_keys/AuthKey_${API_KEY_ID}.p8
-          xcrun notarytool store-credentials "AC_API" \
-            --key ~/.private_keys/AuthKey_${API_KEY_ID}.p8 \
-            --key-id "$API_KEY_ID" \
-            --issuer-id "$API_ISSUER_ID"
         env:
           API_PRIVATE_KEY: ${{ secrets.API_PRIVATE_KEY }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_ISSUER_ID: ${{ secrets.API_ISSUER_ID }}
 
-      - name: Upload to TestFlight
+      - name: Upload to TestFlight using altool
         run: |
           xcrun altool --upload-app \
             --type ios \
