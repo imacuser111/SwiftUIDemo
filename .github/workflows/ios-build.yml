@@ -39,8 +39,9 @@ jobs:
 
       - name: Bump CFBundleVersion
         run: |
-          build_number=${{ github.run_number }}
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $build_number" SwiftUIDemo/Info.plist
+          buildNumber=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}")
+          buildNumber=$(($buildNumber + 1))
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${INFOPLIST_FILE}"
 
       - name: Build archive
         run: |
