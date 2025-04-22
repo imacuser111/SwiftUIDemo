@@ -74,7 +74,7 @@ jobs:
 
       - name: Upload to TestFlight via iTMSTransporter
         run: |
-          xcrun iTMSTransporter \
+          /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/iTMSTransporter \
             -m upload \
             -assetFile build/SwiftUIDemo.ipa \
             -apiKey "$API_KEY_ID" \
