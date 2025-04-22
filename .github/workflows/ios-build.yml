@@ -32,12 +32,6 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
 
-      - name: Bump CFBundleVersion
-        run: |
-          buildNumber=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}")
-          buildNumber=$(($buildNumber + 1))
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${INFOPLIST_FILE}"
-
       - name: Build archive
         run: |
           xcodebuild -project SwiftUIDemo.xcodeproj \
