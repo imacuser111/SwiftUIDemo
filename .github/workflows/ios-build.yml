@@ -16,11 +16,6 @@ jobs:
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-      - name: Bump build number
-        run: |
-          buildNumber=$(date +%s)
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "SwiftUIDemo/Info.plist"
-
       - name: Install signing certificate and provisioning profile
         run: |
           echo "$CERTIFICATE_P12_BASE64" | base64 --decode > certificate.p12
