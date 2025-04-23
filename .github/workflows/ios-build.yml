@@ -32,17 +32,19 @@ jobs:
           PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
 
       - name: Build archive
+        # 使用 Xcode 手動簽章方式打包為 .xcarchive
         run: |
-          xcodebuild -project SwiftUIDemo.xcodeproj \  # 指定專案檔案
-                     -scheme SwiftUIDemo \  # 指定 Scheme
-                     -sdk iphoneos \  # 使用實機 SDK
-                     -configuration Release \  # 使用 Release 模式
-                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \  # 設定輸出路徑
-                     clean archive \  # 清除後打包
-                     CODE_SIGN_STYLE=Manual \  # 手動簽章
-                     PROVISIONING_PROFILE_SPECIFIER=QPPTest \  # 指定描述檔
-                     DEVELOPMENT_TEAM=R263GJSADL \  # 指定團隊 ID
-                     PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test  # 指定 bundle ID
+          xcodebuild \
+            -project SwiftUIDemo.xcodeproj \
+            -scheme SwiftUIDemo \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath $PWD/build/SwiftUIDemo.xcarchive \
+            clean archive \
+            CODE_SIGN_STYLE=Manual \
+            PROVISIONING_PROFILE_SPECIFIER=QPPTest \
+            DEVELOPMENT_TEAM=R263GJSADL \
+            PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test
 
       - name: Export IPA
         run: |
