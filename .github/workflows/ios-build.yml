@@ -46,6 +46,7 @@ jobs:
             DEVELOPMENT_TEAM=R263GJSADL \
             PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test
 
+      # 建立 ExportOptions.plist 並匯出為 .ipa 檔案
       - name: Export IPA
         run: |
           cat > ExportOptions.plist <<EOF
@@ -54,24 +55,24 @@ jobs:
           <plist version="1.0">
           <dict>
               <key>method</key>
-              <string>app-store</string>  <!-- 使用 App Store 發行模式 -->
+              <string>app-store</string>
               <key>signingStyle</key>
-              <string>manual</string>  <!-- 使用手動簽章 -->
+              <string>manual</string>
               <key>provisioningProfiles</key>
               <dict>
                   <key>com.qpptec.QPP.Test</key>
-                  <string>QPPTest</string>  <!-- 指定描述檔名稱 -->
+                  <string>QPPTest</string>
               </dict>
               <key>teamID</key>
-              <string>R263GJSADL</string>  <!-- 開發團隊 ID -->
+              <string>R263GJSADL</string>
           </dict>
           </plist>
           EOF
 
-          xcodebuild -exportArchive \  # 匯出為 .ipa
-                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \  # 指定打包來源
-                     -exportOptionsPlist ExportOptions.plist \  # 套用匯出設定
-                     -exportPath $PWD/build  # 匯出目的地
+          xcodebuild -exportArchive \
+                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \
+                     -exportOptionsPlist ExportOptions.plist \
+                     -exportPath $PWD/build
 
       - name: Prepare App Store Connect API Key
         run: |
@@ -81,13 +82,14 @@ jobs:
           API_PRIVATE_KEY: ${{ secrets.API_PRIVATE_KEY }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
 
+      # 使用 altool 上傳 .ipa 至 TestFlight
       - name: Upload to TestFlight using altool
         run: |
-          xcrun altool --upload-app \  # 使用 altool 上傳
-            --type ios \  # 指定類型為 iOS App
-            --file build/SwiftUIDemo.ipa \  # 指定上傳的 ipa 檔案
-            --apiKey "$API_KEY_ID" \  # API Key ID
-            --apiIssuer "$API_ISSUER_ID"  # Issuer ID
+          xcrun altool --upload-app \
+            --type ios \
+            --file build/SwiftUIDemo.ipa \
+            --apiKey "$API_KEY_ID" \
+            --apiIssuer "$API_ISSUER_ID"
         env:
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_ISSUER_ID: ${{ secrets.API_ISSUER_ID }}
