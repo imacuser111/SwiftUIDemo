@@ -3,30 +3,29 @@ name: Build and Deploy to TestFlight
 on:
   push:
     branches:
-      - cicd
+      - cicd  # 只有 push 到 cicd branch 時才會觸發
 
 jobs:
   build-and-upload:
-    runs-on: macos-latest
+    runs-on: macos-latest  # 使用 macOS 執行環境（預設支援 Xcode）
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # 拉取目前 branch 的原始碼
 
       - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app  # 切換 Xcode 版本
 
       - name: Install signing certificate and provisioning profile
         run: |
-          echo "$CERTIFICATE_P12_BASE64" | base64 --decode > certificate.p12
-          security create-keychain -p "" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "" build.keychain
-          security import certificate.p12 -k build.keychain -P "$P12_PASSWORD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
-
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "$PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/QPPTest.mobileprovision
+          echo "$CERTIFICATE_P12_BASE64" | base64 --decode > certificate.p12  # 解碼憑證
+          security create-keychain -p "" build.keychain  # 建立 keychain
+          security default-keychain -s build.keychain  # 設定為預設 keychain
+          security unlock-keychain -p "" build.keychain  # 解鎖 keychain
+          security import certificate.p12 -k build.keychain -P "$P12_PASSWORD" -T /usr/bin/codesign  # 匯入憑證
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain  # 設定權限
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles  # 建立描述檔目錄
+          echo "$PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/QPPTest.mobileprovision  # 解碼並儲存描述檔
         env:
           CERTIFICATE_P12_BASE64: ${{ secrets.CERTIFICATE_P12_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
@@ -34,16 +33,16 @@ jobs:
 
       - name: Build archive
         run: |
-          xcodebuild -project SwiftUIDemo.xcodeproj \
-                     -scheme SwiftUIDemo \
-                     -sdk iphoneos \
-                     -configuration Release \
-                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \
-                     clean archive \
-                     CODE_SIGN_STYLE=Manual \
-                     PROVISIONING_PROFILE_SPECIFIER=QPPTest \
-                     DEVELOPMENT_TEAM=R263GJSADL \
-                     PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test
+          xcodebuild -project SwiftUIDemo.xcodeproj \  # 指定專案檔案
+                     -scheme SwiftUIDemo \  # 指定 Scheme
+                     -sdk iphoneos \  # 使用實機 SDK
+                     -configuration Release \  # 使用 Release 模式
+                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \  # 設定輸出路徑
+                     clean archive \  # 清除後打包
+                     CODE_SIGN_STYLE=Manual \  # 手動簽章
+                     PROVISIONING_PROFILE_SPECIFIER=QPPTest \  # 指定描述檔
+                     DEVELOPMENT_TEAM=R263GJSADL \  # 指定團隊 ID
+                     PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test  # 指定 bundle ID
 
       - name: Export IPA
         run: |
@@ -53,40 +52,40 @@ jobs:
           <plist version="1.0">
           <dict>
               <key>method</key>
-              <string>app-store</string>
+              <string>app-store</string>  <!-- 使用 App Store 發行模式 -->
               <key>signingStyle</key>
-              <string>manual</string>
+              <string>manual</string>  <!-- 使用手動簽章 -->
               <key>provisioningProfiles</key>
               <dict>
                   <key>com.qpptec.QPP.Test</key>
-                  <string>QPPTest</string>
+                  <string>QPPTest</string>  <!-- 指定描述檔名稱 -->
               </dict>
               <key>teamID</key>
-              <string>R263GJSADL</string>
+              <string>R263GJSADL</string>  <!-- 開發團隊 ID -->
           </dict>
           </plist>
           EOF
 
-          xcodebuild -exportArchive \
-                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \
-                     -exportOptionsPlist ExportOptions.plist \
-                     -exportPath $PWD/build
+          xcodebuild -exportArchive \  # 匯出為 .ipa
+                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \  # 指定打包來源
+                     -exportOptionsPlist ExportOptions.plist \  # 套用匯出設定
+                     -exportPath $PWD/build  # 匯出目的地
 
       - name: Prepare App Store Connect API Key
         run: |
-          mkdir -p ~/.private_keys
-          echo "$API_PRIVATE_KEY" | base64 --decode > ~/.private_keys/AuthKey_${API_KEY_ID}.p8
+          mkdir -p ~/.private_keys  # 建立金鑰儲存路徑
+          echo "$API_PRIVATE_KEY" | base64 --decode > ~/.private_keys/AuthKey_${API_KEY_ID}.p8  # 解碼並儲存金鑰
         env:
           API_PRIVATE_KEY: ${{ secrets.API_PRIVATE_KEY }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
 
       - name: Upload to TestFlight using altool
         run: |
-          xcrun altool --upload-app \
-            --type ios \
-            --file build/SwiftUIDemo.ipa \
-            --apiKey "$API_KEY_ID" \
-            --apiIssuer "$API_ISSUER_ID"
+          xcrun altool --upload-app \  # 使用 altool 上傳
+            --type ios \  # 指定類型為 iOS App
+            --file build/SwiftUIDemo.ipa \  # 指定上傳的 ipa 檔案
+            --apiKey "$API_KEY_ID" \  # API Key ID
+            --apiIssuer "$API_ISSUER_ID"  # Issuer ID
         env:
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_ISSUER_ID: ${{ secrets.API_ISSUER_ID }}
