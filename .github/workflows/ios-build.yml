@@ -31,12 +31,6 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
 
-      - name: Xcode build number auto update
-        uses: poad/xcode-build-number-auto-update@v1
-        with:
-            path: ./SwiftUIDemo/Info.plist
-            auto-increment: true
-
       - name: Build archive
         # 使用 Xcode 手動簽章方式打包為 .xcarchive
         run: |
