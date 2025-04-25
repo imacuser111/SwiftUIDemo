@@ -102,7 +102,7 @@ extension DemoScreen {
         DispatchQueue.global(qos: .background).async {
             var array = [Student]()
             
-            for i in (1...1000) {
+            for i in (1...2) {
                 let student = Student(context: context)
                 let pencil = Pencil(context: context)
                 student.id = UUID()
