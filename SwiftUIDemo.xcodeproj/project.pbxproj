@@ -208,6 +208,8 @@
 		CEC0B1072DBB3903006A1A87 /* Light.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5C6F2D11673600A54123 /* Light.xcassets */; };
 		CEC0B1082DBB3903006A1A87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5B872D1127F200A54123 /* Assets.xcassets */; };
 		CEC0B1092DBB3903006A1A87 /* Dark.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5C702D11673600A54123 /* Dark.xcassets */; };
+		CEC0B1102DBB5F86006A1A87 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEC0B10F2DBB5F86006A1A87 /* ExportOptions.plist */; };
+		CEC0B1112DBB5F86006A1A87 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEC0B10F2DBB5F86006A1A87 /* ExportOptions.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,6 +335,7 @@
 		CE8D5CB22D12966A00A54123 /* PrimaryNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryNavigationBar.swift; sourceTree = "<group>"; };
 		CE8D5CB42D12A20500A54123 /* Task+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+.swift"; sourceTree = "<group>"; };
 		CEC0B10D2DBB3903006A1A87 /* SwiftUIDemoCopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIDemoCopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEC0B10F2DBB5F86006A1A87 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -490,6 +493,7 @@
 		CE8D5B822D1127F100A54123 /* SwiftUIDemo */ = {
 			isa = PBXGroup;
 			children = (
+				CEC0B10F2DBB5F86006A1A87 /* ExportOptions.plist */,
 				CE8D5B832D1127F100A54123 /* SwiftUIDemoApp.swift */,
 				CE8D5B852D1127F100A54123 /* ContentView.swift */,
 				CE8D5B872D1127F200A54123 /* Assets.xcassets */,
@@ -1196,6 +1200,7 @@
 				CE8D5C712D11673600A54123 /* Light.xcassets in Resources */,
 				CE8D5B882D1127F200A54123 /* Assets.xcassets in Resources */,
 				CE8D5C722D11673600A54123 /* Dark.xcassets in Resources */,
+				CEC0B1102DBB5F86006A1A87 /* ExportOptions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1222,6 +1227,7 @@
 				CEC0B1072DBB3903006A1A87 /* Light.xcassets in Resources */,
 				CEC0B1082DBB3903006A1A87 /* Assets.xcassets in Resources */,
 				CEC0B1092DBB3903006A1A87 /* Dark.xcassets in Resources */,
+				CEC0B1112DBB5F86006A1A87 /* ExportOptions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
