@@ -31,28 +31,6 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
 
-      - name: Add ExportOptions plist
-        run: |
-          cat > ExportOptions.plist <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>method</key>
-              <string>app-store</string>
-              <key>signingStyle</key>
-              <string>manual</string>
-              <key>provisioningProfiles</key>
-              <dict>
-                  <key>com.qpptec.QPP.Test</key>
-                  <string>QPPTest</string>
-              </dict>
-              <key>teamID</key>
-              <string>R263GJSADL</string>
-          </dict>
-          </plist>
-          EOF
-
       - name: Build archive
         # 使用 Xcode 手動簽章方式打包為 .xcarchive
         run: |
