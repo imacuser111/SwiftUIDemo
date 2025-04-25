@@ -11,6 +11,9 @@ on:
 jobs:
   build-and-upload:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        scheme: [SwiftUIDemo, SwiftUIDemoCopy]
 
     steps:
       - name: 🧾 Checkout code
@@ -40,7 +43,7 @@ jobs:
 
       - name: 🛠️ Build & Archive with xcodebuild
         run: |
-          xcodebuild -scheme "SwiftUIDemo" \
+          xcodebuild -scheme ${{ matrix.scheme }} \
             -archivePath ./build/SwiftUIDemo.xcarchive \
             -sdk iphoneos \
             -configuration Release \
