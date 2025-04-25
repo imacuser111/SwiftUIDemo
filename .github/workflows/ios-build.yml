@@ -38,16 +38,16 @@ jobs:
         # 使用 Xcode 手動簽章方式打包為 .xcarchive
         run: |
           xcodebuild \
-            -project SwiftUIDemo.xcodeproj \
-            -scheme ${{ matrix.scheme }} \
-            -sdk iphoneos \
-            -configuration Release \
-            -archivePath $PWD/build/SwiftUIDemo.xcarchive \
-            clean archive \
-            CODE_SIGN_STYLE=Manual \
-            PROVISIONING_PROFILE_SPECIFIER=QPPTest \
-            DEVELOPMENT_TEAM=R263GJSADL \
-            PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test
+          -project SwiftUIDemo.xcodeproj \
+          -scheme ${{ matrix.scheme }} \
+          -sdk iphoneos \
+          -configuration Release \
+          -archivePath $PWD/build/${{ matrix.scheme }}.xcarchive \
+          clean archive \
+          CODE_SIGN_STYLE=Manual \
+          PROVISIONING_PROFILE_SPECIFIER=QPPTest \
+          DEVELOPMENT_TEAM=R263GJSADL \
+          PRODUCT_BUNDLE_IDENTIFIER=com.qpptec.QPP.Test
 
       # 建立 ExportOptions.plist 並匯出為 .ipa 檔案
       - name: Export IPA
@@ -73,7 +73,7 @@ jobs:
           EOF
 
           xcodebuild -exportArchive \
-                     -archivePath $PWD/build/SwiftUIDemo.xcarchive \
+                     -archivePath $PWD/build/${{ matrix.scheme }}.xcarchive \
                      -exportOptionsPlist ExportOptions.plist \
                      -exportPath $PWD/build
 
@@ -90,7 +90,7 @@ jobs:
         run: |
           xcrun altool --upload-app \
             --type ios \
-            --file build/SwiftUIDemo.ipa \
+            --file build/${{ matrix.scheme }}.ipa \
             --apiKey "$API_KEY_ID" \
             --apiIssuer "$API_ISSUER_ID"
         env:
