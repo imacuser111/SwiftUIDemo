@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-upload:
     runs-on: macos-latest  # 使用 macOS 執行環境（預設支援 Xcode）
+    strategy:
+      matrix:
+        scheme: [SwiftUIDemo, SwiftUIDemoCopy]
 
     steps:
       - name: Checkout code
@@ -36,7 +39,7 @@ jobs:
         run: |
           xcodebuild \
             -project SwiftUIDemo.xcodeproj \
-            -scheme SwiftUIDemo \
+            -scheme ${{ matrix.scheme }} \
             -sdk iphoneos \
             -configuration Release \
             -archivePath $PWD/build/SwiftUIDemo.xcarchive \
