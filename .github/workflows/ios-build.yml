@@ -37,8 +37,9 @@ jobs:
       # 自動遞增 Build Number
       - name: Set build number
         run: |
-          BUILD_NUMBER=${{ github.run_number }}
-          xcrun agvtool new-version -all $BUILD_NUMBER
+          BASE=${{ github.run_number }}
+          INDEX=${{ strategy.job-index }}
+          xcrun agvtool new-version -all "${BASE}${INDEX}"
 
       - name: Build archive
         # 使用 Xcode 手動簽章方式打包為 .xcarchive
