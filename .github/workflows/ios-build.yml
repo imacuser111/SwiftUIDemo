@@ -63,3 +63,4 @@ jobs:
           fastlane pilot upload \
             --api_key_path api_key.json \
             --ipa ./build/export/SwiftUIDemo.ipa
+            
