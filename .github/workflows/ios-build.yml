@@ -34,6 +34,12 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
 
+      # 自動遞增 Build Number
+      - name: Set build number
+        run: |
+          BUILD_NUMBER=${{ github.run_number }}
+          xcrun agvtool new-version -all $BUILD_NUMBER
+
       - name: Build archive
         # 使用 Xcode 手動簽章方式打包為 .xcarchive
         run: |
