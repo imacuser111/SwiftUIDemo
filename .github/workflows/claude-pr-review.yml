@@ -9,6 +9,7 @@ permissions:
   contents: read          # checkout 需要讀取權限
   pull-requests: write    # Claude 透過 Review API 留言需要寫入權限
   issues: read
+  id-token: write         # claude-code-action@v1 需要 OIDC token 做身份驗證
 
 jobs:
   review:
