@@ -1,63 +1,37 @@
-name: Claude PR Review
+name: Claude PR Auto Review
 
+# 每次 PR 開啟、重新開啟,或推上新 commit 時觸發
 on:
   pull_request:
-    types: [opened, ready_for_review, synchronize]
-    paths:
-      - '**/*.ipynb'
-      - '**/*.py'
-      - '.github/workflows/**'
-      - 'pyproject.toml'
-      - 'uv.lock'
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: 'PR number to review'
-        required: true
-        type: number
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read          # checkout 需要讀取權限
+  pull-requests: write    # Claude 透過 Review API 留言需要寫入權限
+  issues: read
 
 jobs:
-  pr-review:
-    # Only run for internal contributors (not forks) unless manually triggered
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+  review:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-      id-token: write # Anthropic Workload Identity Federation
+    # 略過草稿 PR,避免對 WIP 分支產生雜訊
+    if: github.event.pull_request.draft == false
     steps:
-      - name: Set PR number
-        id: pr-number
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "number=${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
-          else
-            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Checkout PR
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/head', inputs.pr_number) || '' }}
+          fetch-depth: 0   # 取得完整歷史,讓 Claude 能比對 base 與 head
 
-      - name: Run Claude PR Review
-        uses: anthropics/claude-code-action@bbfaf8e1ffe3e688f7ab65ceee78de241e24a238 # v1.0.132 (>=v1.0.130 for WIF inputs)
+      - name: Run Claude Code Review
+        uses: anthropics/claude-code-action@v1
         with:
-          # Anthropic auth via Workload Identity Federation — the action
-          # exchanges this job's GitHub OIDC token (id-token: write above)
-          # for a short-lived access token instead of a static API key.
-          anthropic_federation_rule_id: fdrl_01SqmTwzmEE547mtaYN1mqHL
-          anthropic_organization_id: 1ec12c5c-6542-4da8-bf2f-c15919aef01c
-          anthropic_service_account_id: svac_01BHcCBa1UWFvNrHMqJjuaUZ
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # 以繁體中文做 code review,聚焦在 bug、安全性、可維護性
           prompt: |
-            Please review PR #${{ steps.pr-number.outputs.number }}.
-            1. Run `gh pr view ${{ steps.pr-number.outputs.number }}` to get the PR description
-            2. Run `gh pr diff ${{ steps.pr-number.outputs.number }}` to see the changes
-            3. Analyze the code changes thoroughly
-            4. Post your review using `gh pr review ${{ steps.pr-number.outputs.number }} --comment -b "your review content"`
-          claude_args: |
-            --allowedTools "SlashCommand,Task,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr review:*),Bash(git diff:*),Bash(git log:*),Read,Glob,Grep"
-        env:
-          PR_NUMBER: ${{ steps.pr-number.outputs.number }}
+            請審查這個 pull request 的程式碼變更,並以繁體中文留下回饋。
+            請特別注意:
+            - 潛在的 bug 與 edge case 處理
+            - 安全性問題(如注入、未驗證輸入、硬編碼機密)
+            - 程式碼可讀性與可維護性
+            - 缺少的測試
+            針對具體的行給出 inline 評論,最後寫一段整體摘要。
+            如果整體看起來沒問題,請明確說明可以合併。
