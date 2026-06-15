@@ -52,10 +52,11 @@ jobs:
           anthropic_service_account_id: svac_01BHcCBa1UWFvNrHMqJjuaUZ
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
-            Review PR #${{ steps.pr-number.outputs.number }}:
-            1. Use `gh pr diff` to get the changes
-            2. Use `gh pr view` to get the PR description  
-            3. Post your review with `gh pr review --comment`
+            Please review PR #${{ steps.pr-number.outputs.number }}.
+            1. Run `gh pr view ${{ steps.pr-number.outputs.number }}` to get the PR description
+            2. Run `gh pr diff ${{ steps.pr-number.outputs.number }}` to see the changes
+            3. Analyze the code changes thoroughly
+            4. Post your review using `gh pr review ${{ steps.pr-number.outputs.number }} --comment -b "your review content"`
           claude_args: |
             --allowedTools "SlashCommand,Task,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr review:*),Bash(git diff:*),Bash(git log:*),Read,Glob,Grep"
         env:
