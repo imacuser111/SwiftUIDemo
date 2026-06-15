@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4  # 拉取目前 branch 的原始碼
 
       - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app  # 切換 Xcode 版本
+        run: sudo xcode-select -s /Applications/Xcode_26.2.app  # 切換 Xcode 版本
 
       - name: Install signing certificate and provisioning profile
         run: |
