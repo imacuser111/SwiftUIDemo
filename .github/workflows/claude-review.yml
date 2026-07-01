@@ -1,0 +1,31 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            請審查這個 PR 的程式碼變更，重點關注：
+            - 程式邏輯正確性
+            - 潛在 bug 或 edge case
+            - 程式碼風格與可讀性
+            - 安全性疑慮
+
+            請用中文回覆，並在 PR 留下評論。
