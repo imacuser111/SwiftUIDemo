@@ -21,6 +21,7 @@ struct DemoScreen: View {
     @State private var students: [Student] = []
     @State private var fetchLimit: Int = 10 // 初始為 10
     
+    // 測試 Pull Request
 //    static func fetchRequestLimit10() -> NSFetchRequest<Student> {
 //        let request: NSFetchRequest<Student> = Student.fetchRequest()
 //        request.fetchLimit = 10
@@ -102,7 +103,7 @@ extension DemoScreen {
         DispatchQueue.global(qos: .background).async {
             var array = [Student]()
             
-            for i in (1...1000) {
+            for i in (1...2) {
                 let student = Student(context: context)
                 let pencil = Pencil(context: context)
                 student.id = UUID()
